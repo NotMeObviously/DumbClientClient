@@ -4,6 +4,11 @@ import time
 import os
 import socket
 
+def pull():
+    repo = git.Repo('./')
+    o = repo.remotes.origin
+    o.pull()
+
 def search_server_to_connect():
     opened = False
     while not opened:
@@ -45,7 +50,4 @@ while not close:
         client.close()
         close = True
 
-def pull():
-    repo = git.Repo('./')
-    o = repo.remotes.origin
-    o.pull()
+
