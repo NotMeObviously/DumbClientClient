@@ -5,7 +5,8 @@ import os
 import socket
 
 def pull():
-    repo = git.Repo('./')
+    print("[*] pulling...")
+    repo = git.Repo('./setup')
     o = repo.remotes.origin
     o.pull()
 
@@ -13,10 +14,13 @@ def search_server_to_connect():
     opened = False
     while not opened:
         try:
+            print("[*]searching file...")
             f=open("setup\\address.txt","r")
             text = f.read()
             host, port = text.split(":")
+            print("[*]FOUND: "+host+" "+port)
         except:
+            print("[*]file not found :(")
             time.sleep(20)
             pull()
     return int(host),int(port)
@@ -29,10 +33,12 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 connected = False
 while not connected:
     try:
+        print("[*]try connection...")
         client.connect((target_host,target_port))
         connected = True
+        print("[*]CONNECTED")
     except:
-        print("errore connessione")
+        print("[*]error in connection :(")
     time.sleep(3)
 
 close = False
@@ -49,5 +55,7 @@ while not close:
     elif response_json["op"] == "close":
         client.close()
         close = True
+
+
 
 
