@@ -19,10 +19,11 @@ def search_server_to_connect():
     while not opened:
         try:
             print("[*]searching file...")
-            f=open("setup\\address.txt","r")
+            f=open("setup\\addres.txt","r")
             text = f.read()
             host, port = text.split(":")
             print("[*]FOUND: "+host+" "+port)
+            opened = True
         except FileNotFoundError:
             print("[*]file not found :(")
             time.sleep(20)
@@ -59,6 +60,7 @@ while not close:
     elif response_json["op"] == "close":
         client.close()
         close = True
+
 
 
 
