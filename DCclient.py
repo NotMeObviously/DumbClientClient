@@ -65,6 +65,7 @@ while not connected:
         print("[*]CONNECTED")
     except:
         print("[*]error in connection :(")
+        pull()
     time.sleep(3)
 
 close = False
